@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Items;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,6 +15,7 @@ class ItemController extends AbstractController
      */
     public function index()
     {
-        return $this->render('items/index.html.twig');
+        $items = $this->getDoctrine()->getRepository(Items::class)->findAll();
+        return $this->render('items/index.html.twig', array('items' => $items));
     }
 }

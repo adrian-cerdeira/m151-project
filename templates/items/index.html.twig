@@ -2,11 +2,53 @@
 {% block title %}Einkaufliste App - M151
 {% endblock %}
 {% block body %}
-	<section class="hero">
-		<div class="hero-body">
-			<div class="container">
-				<h1 class="title">Einkaufliste</h1>
-			</div>
-		</div>
+	<section class="section container">
+		<h1 class="title">Einkaufliste</h1>
+
+		<table class="table is-fullwidth">
+			<thead>
+				<tr>
+					<th>
+						<abbr>#</abbr>
+					</th>
+					<th>
+						<abbr>Anzahl</abbr>
+					</th>
+					<th>
+						<abbr>Name</abbr>
+					</th>
+					<th>
+						<abbr></abbr>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for item in items %}
+					<tr>
+						<td>
+							{{item.id}}
+						</td>
+						<td>
+							{{item.amount}}
+						</td>
+						<td>
+							{{item.name}}
+						</td>
+						<td>
+							<div class="columns">
+								<div class="column">
+									<i class="fas fa-edit"></i>
+									Editieren
+								</div>
+								<div class="column">
+									<i class="fas fa-trash"></i>
+									Löschen
+								</div>
+							</div>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
 	</section>
 {% endblock %}
