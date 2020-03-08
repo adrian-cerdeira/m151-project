@@ -3,7 +3,7 @@
 {% endblock %}
 {% block body %}
 	<section class="section container">
-		<h1 class="title">Einkaufliste</h1>
+		<h1 class="title has-text-centered">Einkaufliste</h1>
 
 		<table class="table is-fullwidth">
 			<thead>
@@ -37,12 +37,16 @@
 						<td>
 							<div class="columns">
 								<div class="column">
-									<i class="fas fa-edit"></i>
-									Editieren
+									<a class="button is-primary">
+										<i class="fas fa-edit"></i>
+										Editieren
+									</a>
 								</div>
 								<div class="column">
-									<i class="fas fa-trash"></i>
-									Löschen
+									<a class="button is-danger">
+										<i class="fas fa-trash"></i>
+										Löschen
+									</a>
 								</div>
 							</div>
 						</td>
@@ -50,5 +54,31 @@
 				{% endfor %}
 			</tbody>
 		</table>
+
+		<form class="form" action="/items/add" method="POST">
+			<div class="field">
+				<label class="label">Anzahl</label>
+				<div class="control">
+					<input class="input" type="number" name="amount" placeholder="Anzahl eingeben" required>
+				</div>
+			</div>
+
+			<div class="field">
+				<label class="label">Name</label>
+				<div class="control">
+					<input class="input" type="text" name="name" placeholder="Name eingeben" required>
+				</div>
+			</div>
+
+			<div class="field is-grouped">
+				<div class="control">
+				{# TODO: Disabled entferenen, falls hinzufügen funktioniert #}
+					<button class="button is-primary" disabled>
+						<i class="fas fa-plus"></i>
+						Hinzufügen
+					</button>
+				</div>
+			</div>
+		</form>
 	</section>
 {% endblock %}
