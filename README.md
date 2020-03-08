@@ -1,3 +1,8 @@
-# m151
+# M151 - Projekt
 
-Projekt für Modul 151. Eigene Einkaufsliste-App erstellen.
+## Infos
+
+- PHP MVC Framework [Symfony](https://symfony.com/)
+- CSS-Framework mit [Bulma](https://bulma.io/)
+- Tooling mit Dependency-Manager [Composer](https://getcomposer.org/)
+- Templates mit [Twig](https://twig.symfony.com/doc/3.x/)
