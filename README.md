@@ -12,20 +12,21 @@
 ## Setup
 
 ``` bash
+    # Install dependencies
     composer install
 
-    #Edit the env file and add DB params
+    # Edit the env file and add DB params
 
-    #Create Article schema
+    # Create Article schema
     php bin/console doctrine:migrations:diff
 
-    #Run migrations
+    # Run migrations
     php bin/console doctrine:migrations:migrate
 
-    #Build for production (TODO!)
+    # Build for production (TODO!)
     npm run build
 
-    #Run symfony server
+    # Run symfony server
     symfony server:start
 ```
 
