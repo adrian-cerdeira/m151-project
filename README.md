@@ -22,7 +22,11 @@
 
     # Run migrations
     php bin/console doctrine:migrations:migrate
+```
 
+## Start
+
+``` bash
     # Build for production (TODO!)
     npm run build
 
