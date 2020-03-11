@@ -12,13 +12,20 @@
 ## Setup
 
 ``` bash
+    # Clone
+    git clone https://github.com/ac-webdesign/m151-project.git
+    cd m151-project.git
+
     # Install dependencies
     composer install
 
     # Edit the env file and add DB params
 
-    # Create Article schema
-    php bin/console doctrine:migrations:diff
+    # Create Database
+    php bin/console doctrine:database:create
+
+    # Create Migration (if Entity is changed)
+    # php bin/console doctrine:migrations:diff
 
     # Run migrations
     php bin/console doctrine:migrations:migrate
@@ -30,7 +37,7 @@
     # Build for production (TODO!)
     npm run build
 
-    # Run symfony server
+    # Run symfony server (TODO!)
     symfony server:start
 ```
 
