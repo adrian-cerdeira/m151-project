@@ -18,11 +18,10 @@ class ItemType extends AbstractType
                 'amount',
                 IntegerType::class,
                 array(
-                    'label' => 'Anzahl',
                     'attr' =>
                     array(
                         'min' => 1,
-                        'class' => 'control'
+                        'class' => 'input'
                     ),
                 )
             )
@@ -30,10 +29,9 @@ class ItemType extends AbstractType
                 'name',
                 TextType::class,
                 array(
-                    'label' => 'Name',
                     'attr' =>
                     array(
-                        'class' => 'control'
+                        'class' => 'input'
                     )
                 )
             )
@@ -41,7 +39,6 @@ class ItemType extends AbstractType
                 'submit',
                 SubmitType::class,
                 array(
-                    'label' => 'Hinzufügen',
                     'attr' =>
                     array(
                         'class' => 'button is-primary'

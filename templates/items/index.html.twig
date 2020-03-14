@@ -56,10 +56,34 @@
 		</table>
 
 		<h2 class="title has-text-centered">Produkt hinzufügen</h2>
-		<div class="form has-text-centered">
-			{{form_start(form)}}
-			{{form_widget(form)}}
-			{{form_end(form)}}
+		<div class="form">
+			{{ form_start(form) }}
+			<div class="field">
+				<div class="label">
+					{{ form_label(form.amount, "Anzahl") }}
+				</div>
+				<div class="control">
+					{{ form_widget(form.amount) }}
+				</div>
+			</div>
+
+			<div class="field">
+				<div class="control">
+					<div class="label">
+						{{ form_label(form.name, "Name") }}
+					</div>
+					<div class="control">
+						{{ form_widget(form.name) }}
+					</div>
+				</div>
+			</div>
+
+			<div class="field is-grouped">
+				<div class="control">
+					{{ form_row(form.submit, { 'label': 'Hinzufügen'}) }}
+				</div>
+			</div>
+			{{ form_end(form) }}
 		</div>
-	</section>
-{% endblock %}
+	</div>
+</section>{% endblock %}
