@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Items;
+use App\Form\EditItemType;
 use App\Form\ItemType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,7 +20,7 @@ class ItemController extends AbstractController
         $form = $this->createForm(ItemType::class, $items);
 
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->addAction($form->getData());
             return $this->redirect("/");
         }
@@ -31,6 +32,32 @@ class ItemController extends AbstractController
                 'form' => $form->createView()
             )
         );
+    }
+
+    /**
+     * @Route("/edit/{id}")
+     */
+    public function editAction(Request $request, $id)
+    {
+        $item = $this->getDoctrine()->getRepository(Items::class)->find($id);
+        $form = $this->createForm(EditItemType::class);
+        $form->get('amount')->setData($item->getAmount());
+        $form->get('name')->setData($item->getName());
+
+        $form->handleRequest($request);
+        $isFormSubmitted = $form->isSubmitted() && $form->get('submit')->isClicked() && $form->isValid();
+        $isCanceled = $form->isSubmitted() && $form->get('cancel')->isClicked();
+
+        if ($isFormSubmitted) {
+            $this->saveItemChanges($form->getData(), $item);
+            return $this->redirect("/");
+        } else if ($isCanceled) {
+            return $this->redirect("/");
+        }
+
+        return $this->render('items/edit.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     /**
@@ -57,6 +84,15 @@ class ItemController extends AbstractController
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($item);
+        $entityManager->flush();
+    }
+
+    private function saveItemChanges($form, $item)
+    {
+        $item->setName($form['name']);
+        $item->setAmount($form['amount']);
+
+        $entityManager = $this->getDoctrine()->getManager();
         $entityManager->flush();
     }
 }
