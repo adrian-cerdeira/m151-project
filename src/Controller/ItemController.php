@@ -33,6 +33,22 @@ class ItemController extends AbstractController
         );
     }
 
+    /**
+     * @Route("/remove/{id}")
+     */
+    public function removeAction(Request $request, $id)
+    {
+        $removedItem = $this->getDoctrine()->getRepository(Items::class)->find($id);
+
+        if ($removedItem) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($removedItem);
+            $entityManager->flush();
+        }
+
+        return $this->redirect('/');
+    }
+
     private function addAction($form)
     {
         $item = new Items();
