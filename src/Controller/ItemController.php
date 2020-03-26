@@ -17,20 +17,22 @@ class ItemController extends AbstractController
      */
     public function index(Request $request)
     {
-        $items = $this->connection()->query('SELECT * FROM ac_items');
-        $form = $this->createForm(ItemType::class, $items);
+        $items = $this->connection()->prepare('SELECT * FROM ac_items');
+        $items->execute();
+        $items = $items->fetch();
+        // $form = $this->createForm(ItemType::class, $items);
 
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->addAction($form->getData());
-            return $this->redirect("/");
-        }
+        // $form->handleRequest($request);
+        // if ($form->isSubmitted() && $form->isValid()) {
+        //     $this->addAction($form->getData());
+        //     return $this->redirect("/");
+        // }
 
         return $this->render(
             'items/index.html.twig',
             array(
                 'items' => $items,
-                'form' => $form->createView()
+                // 'form' => $form->createView()
             )
         );
     }
@@ -99,11 +101,13 @@ class ItemController extends AbstractController
 
     private function connection()
     {
-        return mysqli_connect(
-            'https://login-67.hoststar.ch/',
-            'inf17d',
-            'j5TQh!zmMtqsjY3',
-            'inf17d'
-        );
+        $dbhost = "https://login-67.hoststar.ch/phpMyAdmin/?db=inf17d";
+        $dbuser = "inf17d";
+        $dbpass = "j5TQh!zmMtqsjY3";
+        $db = "inf17d";
+        $port = "5306";
+        $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $db, $port) or die("Connect failed: %s\n" . $conn->error);
+
+        return $conn;
     }
 }
