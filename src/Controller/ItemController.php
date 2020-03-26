@@ -17,7 +17,7 @@ class ItemController extends AbstractController
      */
     public function index(Request $request)
     {
-        $items = $this->getDoctrine()->getRepository(Items::class)->findAll();
+        $items = $this->connection()->query('SELECT * FROM ac_items');
         $form = $this->createForm(ItemType::class, $items);
 
         $form->handleRequest($request);
@@ -40,10 +40,10 @@ class ItemController extends AbstractController
      */
     public function editAction(Request $request, $id)
     {
-        $item = $this->getDoctrine()->getRepository(Items::class)->find($id);
+        $item = $this->connection()->query("SELECT * FROM ac_items WHERE Id = '$id'");
         $form = $this->createForm(EditItemType::class);
-        $form->get('amount')->setData($item->getAmount());
-        $form->get('name')->setData($item->getName());
+        // $form->get('amount')->setData($item->id);
+        // $form->get('name')->setData($item->getName());
 
         $form->handleRequest($request);
         $isFormSubmitted = $form->isSubmitted() && $form->get('submit')->isClicked() && $form->isValid();
@@ -95,5 +95,15 @@ class ItemController extends AbstractController
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->flush();
+    }
+
+    private function connection()
+    {
+        return mysqli_connect(
+            'https://login-67.hoststar.ch/',
+            'inf17d',
+            'j5TQh!zmMtqsjY3',
+            'inf17d'
+        );
     }
 }
