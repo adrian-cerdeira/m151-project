@@ -55,6 +55,11 @@ class Items
         return $this;
     }
 
+    public function getAll()
+    {
+        return $this->connection()->query("SELECT id, name, amount FROM ac_items");
+    }
+
     public function create(Items $item): void
     {
         $connection = $this->connection();

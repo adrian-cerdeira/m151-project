@@ -19,7 +19,7 @@ class ItemController extends AbstractController
     {
         $items = new Items();
         $form = $this->createForm(ItemType::class, $items);
-        $items = $items->connection()->query("SELECT id, name, amount FROM ac_items");
+        $items = $items->getAll();
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
