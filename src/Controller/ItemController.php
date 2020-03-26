@@ -17,9 +17,7 @@ class ItemController extends AbstractController
      */
     public function index(Request $request)
     {
-        $items = $this->connection()->prepare('SELECT * FROM ac_items');
-        $items->execute();
-        $items = $items->fetch();
+        $items = $this->connection()->query("SELECT id, name, amount FROM ac_items");
         // $form = $this->createForm(ItemType::class, $items);
 
         // $form->handleRequest($request);
@@ -101,12 +99,11 @@ class ItemController extends AbstractController
 
     private function connection()
     {
-        $dbhost = "https://login-67.hoststar.ch/phpMyAdmin/?db=inf17d";
+        $dbhost = "login-67.hoststar.ch";
         $dbuser = "inf17d";
         $dbpass = "j5TQh!zmMtqsjY3";
         $db = "inf17d";
-        $port = "5306";
-        $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $db, $port) or die("Connect failed: %s\n" . $conn->error);
+        $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $db) or die("Connect failed: %s\n" . $conn->error);
 
         return $conn;
     }
