@@ -31,16 +31,6 @@
     php bin/console doctrine:migrations:migrate
 ```
 
-## Start
-
-``` bash
-    # Build for production (TODO!)
-    npm run build
-
-    # Run symfony server (TODO!)
-    symfony server:start
-```
-
 ## Update Database
 
 ### Create Migration
