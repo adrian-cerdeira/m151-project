@@ -54,4 +54,22 @@ class Items
 
         return $this;
     }
+
+    public function create(Items $item): void
+    {
+        $connection = $this->connection();
+        $connection->query("INSERT INTO ac_items (name, amount) VALUES  (" . $item->getName() . "," . $item->getAmount() . ")");
+        $connection->close();
+    }
+
+    public function connection()
+    {
+        $dbhost = "login-67.hoststar.ch";
+        $dbuser = "inf17d";
+        $dbpass = "j5TQh!zmMtqsjY3";
+        $db = "inf17d";
+        $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $db) or die("Connect failed: %s\n" . $conn->error);
+
+        return $conn;
+    }
 }

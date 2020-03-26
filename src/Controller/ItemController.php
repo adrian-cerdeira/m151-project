@@ -17,20 +17,21 @@ class ItemController extends AbstractController
      */
     public function index(Request $request)
     {
-        $items = $this->connection()->query("SELECT id, name, amount FROM ac_items");
-        // $form = $this->createForm(ItemType::class, $items);
+        $items = new Items();
+        $form = $this->createForm(ItemType::class, $items);
+        $items = $items->connection()->query("SELECT id, name, amount FROM ac_items");
 
-        // $form->handleRequest($request);
-        // if ($form->isSubmitted() && $form->isValid()) {
-        //     $this->addAction($form->getData());
-        //     return $this->redirect("/");
-        // }
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->addAction($form->getData());
+            return $this->redirect("/");
+        }
 
         return $this->render(
             'items/index.html.twig',
             array(
                 'items' => $items,
-                // 'form' => $form->createView()
+                'form' => $form->createView()
             )
         );
     }
@@ -40,25 +41,25 @@ class ItemController extends AbstractController
      */
     public function editAction(Request $request, $id)
     {
-        $item = $this->connection()->query("SELECT * FROM ac_items WHERE Id = '$id'");
-        $form = $this->createForm(EditItemType::class);
+        // $item = $this->connection()->query("SELECT * FROM ac_items WHERE Id = '$id'");
+        // $form = $this->createForm(EditItemType::class);
         // $form->get('amount')->setData($item->id);
         // $form->get('name')->setData($item->getName());
 
-        $form->handleRequest($request);
-        $isFormSubmitted = $form->isSubmitted() && $form->get('submit')->isClicked() && $form->isValid();
-        $isCanceled = $form->isSubmitted() && $form->get('cancel')->isClicked();
+        // $form->handleRequest($request);
+        // $isFormSubmitted = $form->isSubmitted() && $form->get('submit')->isClicked() && $form->isValid();
+        // $isCanceled = $form->isSubmitted() && $form->get('cancel')->isClicked();
 
-        if ($isFormSubmitted) {
-            $this->saveItemChanges($form->getData(), $item);
-            return $this->redirect("/");
-        } else if ($isCanceled) {
-            return $this->redirect("/");
-        }
+        // if ($isFormSubmitted) {
+        //     $this->saveItemChanges($form->getData(), $item);
+        //     return $this->redirect("/");
+        // } else if ($isCanceled) {
+        //     return $this->redirect("/");
+        // }
 
-        return $this->render('items/edit.html.twig', [
-            'form' => $form->createView()
-        ]);
+        // return $this->render('items/edit.html.twig', [
+        //     'form' => $form->createView()
+        // ]);
     }
 
     /**
@@ -82,10 +83,7 @@ class ItemController extends AbstractController
         $item = new Items();
         $item->setName($form['name']);
         $item->setAmount($form['amount']);
-
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($item);
-        $entityManager->flush();
+        $item->create($item);
     }
 
     private function saveItemChanges($form, $item)
@@ -95,16 +93,5 @@ class ItemController extends AbstractController
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->flush();
-    }
-
-    private function connection()
-    {
-        $dbhost = "login-67.hoststar.ch";
-        $dbuser = "inf17d";
-        $dbpass = "j5TQh!zmMtqsjY3";
-        $db = "inf17d";
-        $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $db) or die("Connect failed: %s\n" . $conn->error);
-
-        return $conn;
     }
 }
