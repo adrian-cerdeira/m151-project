@@ -60,11 +60,17 @@ class Items
         return $this->connection()->query("SELECT id, name, amount FROM ac_items");
     }
 
-    public function create(Items $item): void
+    public function create(): void
     {
         $connection = $this->connection();
-        $connection->query("INSERT INTO ac_items (name, amount) VALUES  (" . $item->getName() . "," . $item->getAmount() . ")");
-        $connection->close();
+        $statement = $connection->prepare("INSERT INTO ac_items (name, amount) VALUES (?, ?)");
+        $name = $this->getName();
+        $amount = $this->getAmount();
+        $statement->bind_param('si', $name, $amount);
+
+        mysqli_stmt_execute($statement);
+        mysqli_stmt_close($statement);
+        mysqli_close($connection);
     }
 
     public function connection()

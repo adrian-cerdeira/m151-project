@@ -23,7 +23,8 @@ class ItemController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->addAction($form->getData());
+            $formData = $form->getData();
+            $this->addAction($formData);
             return $this->redirect("/");
         }
 
@@ -81,9 +82,14 @@ class ItemController extends AbstractController
     private function addAction($form)
     {
         $item = new Items();
-        $item->setName($form['name']);
-        $item->setAmount($form['amount']);
-        $item->create($item);
+
+        $name = $form->getName();
+        $amount = $form->getAmount();
+
+        $item->setName($name);
+        $item->setAmount($amount);
+
+        $item->create();
     }
 
     private function saveItemChanges($form, $item)
