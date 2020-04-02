@@ -68,13 +68,8 @@ class ItemController extends AbstractController
      */
     public function removeAction(Request $request, $id)
     {
-        $removedItem = $this->getDoctrine()->getRepository(Items::class)->find($id);
-
-        if ($removedItem) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($removedItem);
-            $entityManager->flush();
-        }
+        $item = new Items();
+        $item->delete($id);
 
         return $this->redirect('/');
     }

@@ -73,6 +73,17 @@ class Items
         mysqli_close($connection);
     }
 
+    public function delete(int $id): void
+    {
+        $connection = $this->connection();
+        $statement = $connection->prepare("DELETE FROM ac_items WHERE id = ?");
+        $statement->bind_param('i', $id);
+
+        mysqli_stmt_execute($statement);
+        mysqli_stmt_close($statement);
+        mysqli_close($connection);
+    }
+
     public function connection()
     {
         $dbhost = "login-67.hoststar.ch";
