@@ -25,6 +25,7 @@ class ItemController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
             $this->addAction($formData);
+
             return $this->redirect("/");
         }
 
@@ -42,25 +43,29 @@ class ItemController extends AbstractController
      */
     public function editAction(Request $request, $id)
     {
-        // $item = $this->connection()->query("SELECT * FROM ac_items WHERE Id = '$id'");
-        // $form = $this->createForm(EditItemType::class);
-        // $form->get('amount')->setData($item->id);
-        // $form->get('name')->setData($item->getName());
+        $item = new Items();
+        $item = $item->getById($id);
 
-        // $form->handleRequest($request);
-        // $isFormSubmitted = $form->isSubmitted() && $form->get('submit')->isClicked() && $form->isValid();
-        // $isCanceled = $form->isSubmitted() && $form->get('cancel')->isClicked();
+        $form = $this->createForm(EditItemType::class);
+        $form->get('name')->setData($item->getName());
+        $form->get('amount')->setData($item->getAmount());
 
-        // if ($isFormSubmitted) {
-        //     $this->saveItemChanges($form->getData(), $item);
-        //     return $this->redirect("/");
-        // } else if ($isCanceled) {
-        //     return $this->redirect("/");
-        // }
+        $form->handleRequest($request);
+        $isFormSubmitted = $form->isSubmitted() && $form->get('submit')->isClicked() && $form->isValid();
+        $isCanceled = $form->isSubmitted() && $form->get('cancel')->isClicked();
 
-        // return $this->render('items/edit.html.twig', [
-        //     'form' => $form->createView()
-        // ]);
+        if ($isFormSubmitted) {
+            $formData = $form->getData();
+            $this->save($formData, $id);
+
+            return $this->redirect("/");
+        } else if ($isCanceled) {
+            return $this->redirect("/");
+        }
+
+        return $this->render('items/edit.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     /**
@@ -77,7 +82,6 @@ class ItemController extends AbstractController
     private function addAction($form)
     {
         $item = new Items();
-
         $name = $form->getName();
         $amount = $form->getAmount();
 
@@ -87,12 +91,15 @@ class ItemController extends AbstractController
         $item->create();
     }
 
-    private function saveItemChanges($form, $item)
+    private function save($form, $id)
     {
-        $item->setName($form['name']);
-        $item->setAmount($form['amount']);
+        $item = new Items();
+        $name = $form['name'];
+        $amount = $form['amount'];
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->flush();
+        $item->setName($name);
+        $item->setAmount($amount);
+
+        $item->update($id);
     }
 }

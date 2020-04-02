@@ -60,6 +60,26 @@ class Items
         return $this->connection()->query("SELECT id, name, amount FROM ac_items");
     }
 
+    public function getById(int $id)
+    {
+        $item = new Items();
+        $connection = $this->connection();
+        $statement = $connection->prepare("SELECT * FROM ac_items WHERE id = ?");
+        $statement->bind_param("i", $id);
+
+        mysqli_stmt_execute($statement);
+        $statement->bind_result($id, $name, $amount);
+        $statement->fetch();
+
+        $item->setName($name);
+        $item->setAmount($amount);
+
+        mysqli_stmt_close($statement);
+        mysqli_close($connection);
+
+        return $item;
+    }
+
     public function create(): void
     {
         $connection = $this->connection();
@@ -67,6 +87,19 @@ class Items
         $name = $this->getName();
         $amount = $this->getAmount();
         $statement->bind_param('si', $name, $amount);
+
+        mysqli_stmt_execute($statement);
+        mysqli_stmt_close($statement);
+        mysqli_close($connection);
+    }
+
+    public function update(int $id): void
+    {
+        $connection = $this->connection();
+        $statement = $connection->prepare("UPDATE ac_items SET name=?, amount=? WHERE id=?");
+        $name = $this->getName();
+        $amount = $this->getAmount();
+        $statement->bind_param('sii', $name, $amount, $id);
 
         mysqli_stmt_execute($statement);
         mysqli_stmt_close($statement);
