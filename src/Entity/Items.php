@@ -68,6 +68,7 @@ class Items
         $statement->bind_param("i", $id);
 
         mysqli_stmt_execute($statement);
+
         $statement->bind_result($id, $name, $amount);
         $statement->fetch();
 
@@ -97,6 +98,7 @@ class Items
     {
         $connection = $this->connection();
         $statement = $connection->prepare("UPDATE ac_items SET name=?, amount=? WHERE id=?");
+        
         $name = $this->getName();
         $amount = $this->getAmount();
         $statement->bind_param('sii', $name, $amount, $id);
