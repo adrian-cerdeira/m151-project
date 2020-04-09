@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ItemController extends AbstractController
 {
-    // TODO: Refactor
     /**
      * @Route("/")
      */
@@ -51,10 +50,10 @@ class ItemController extends AbstractController
         $form->get('amount')->setData($item->getAmount());
 
         $form->handleRequest($request);
-        $isFormSubmitted = $form->isSubmitted() && $form->get('submit')->isClicked() && $form->isValid();
+        $isSubmitted = $form->isSubmitted() && $form->get('submit')->isClicked() && $form->isValid();
         $isCanceled = $form->isSubmitted() && $form->get('cancel')->isClicked();
 
-        if ($isFormSubmitted) {
+        if ($isSubmitted) {
             $formData = $form->getData();
             $this->save($formData, $id);
 
