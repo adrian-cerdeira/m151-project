@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\db;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ItemsRepository")
@@ -98,7 +99,7 @@ class Items
     {
         $connection = $this->connection();
         $statement = $connection->prepare("UPDATE ac_items SET name=?, amount=? WHERE id=?");
-        
+
         $name = $this->getName();
         $amount = $this->getAmount();
         $statement->bind_param('sii', $name, $amount, $id);
@@ -122,10 +123,11 @@ class Items
     public function connection()
     {
         // TODO: Auslagern in Environment Variablen
-        $dbhost = "login-67.hoststar.ch";
-        $dbuser = "inf17d";
-        $dbpass = "j5TQh!zmMtqsjY3";
-        $db = "inf17d";
+        $environment = new db();
+        $dbhost = $environment->getHost();
+        $dbuser = $environment->getUser();
+        $dbpass = $environment->getPass();
+        $db = $environment->getDb();
         $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $db) or die("Connect failed: %s\n" . $conn->error);
 
         return $conn;
