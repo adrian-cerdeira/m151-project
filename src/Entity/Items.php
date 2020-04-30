@@ -121,6 +121,7 @@ class Items
 
     public function connection()
     {
+        // TODO: Auslagern in Environment Variablen
         $dbhost = "login-67.hoststar.ch";
         $dbuser = "inf17d";
         $dbpass = "j5TQh!zmMtqsjY3";

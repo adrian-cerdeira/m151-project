@@ -19,8 +19,9 @@ class ItemController extends AbstractController
         $items = new Items();
         $form = $this->createForm(ItemType::class, $items);
         $items = $items->getAll();
-
         $form->handleRequest($request);
+
+        // Erstellung eines Items handlen
         if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
             $this->addAction($formData);
@@ -30,10 +31,10 @@ class ItemController extends AbstractController
 
         return $this->render(
             'items/index.html.twig',
-            array(
+            [
                 'items' => $items,
                 'form' => $form->createView()
-            )
+            ]
         );
     }
 
@@ -62,9 +63,12 @@ class ItemController extends AbstractController
             return $this->redirect("/");
         }
 
-        return $this->render('items/edit.html.twig', [
-            'form' => $form->createView()
-        ]);
+        return $this->render(
+            'items/edit.html.twig',
+            [
+                'form' => $form->createView()
+            ]
+        );
     }
 
     /**
