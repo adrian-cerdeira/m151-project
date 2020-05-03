@@ -122,7 +122,6 @@ class Items
 
     public function connection()
     {
-        // TODO: Auslagern in Environment Variablen
         $environment = new db();
         $dbhost = $environment->getHost();
         $dbuser = $environment->getUser();
