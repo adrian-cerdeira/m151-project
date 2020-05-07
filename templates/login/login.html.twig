@@ -4,7 +4,7 @@
 {% endblock %}
 {% block body %}
 	<section class="section container">
-		<h1 class="title has-text-centered">Registrieren</h1>
+		<h1 class="title has-text-centered">Anmelden</h1>
 		<div class="form">
 			{{ form_start(form) }}
 			<div class="field">
@@ -29,7 +29,12 @@
 
 			<div class="field is-grouped">
 				<div class="control">
-					{{ form_row(form.submit, { 'label': 'Registrieren'}) }}
+					{{ form_row(form.submit, { 'label': 'Anmelden'}) }}
+				</div>
+				<div class="control">
+					<a href="/register">
+						{{ form_row(form.register, { 'label': 'Registrieren'}) }}
+					</a>
 				</div>
 			</div>
 			{{ form_end(form) }}

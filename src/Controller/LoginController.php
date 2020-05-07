@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Users;
+use App\Form\LoginType;
 use App\Form\RegisterType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,6 +26,27 @@ class LoginController extends AbstractController
 
         return $this->render(
             'login/register.html.twig',
+            [
+                'form' => $form->createView()
+            ]
+        );
+    }
+
+    /**
+     * @Route("/login")
+     */
+    public function loginAction(Request $request)
+    {
+        $user = new Users();
+        $form = $this->createForm(LoginType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Anmelden eines Users
+        }
+
+        return $this->render(
+            'login/login.html.twig',
             [
                 'form' => $form->createView()
             ]
