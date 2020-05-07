@@ -21,7 +21,10 @@ class LoginController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Speicherung eines Users
+            $formData = $form->getData();
+            $this->registerUser($formData, $user);
+
+            return $this->redirect('/');
         }
 
         return $this->render(
@@ -51,5 +54,16 @@ class LoginController extends AbstractController
                 'form' => $form->createView()
             ]
         );
+    }
+
+    private function registerUser($form, $user)
+    {
+        $userName = $form->getUserName();
+        $password = $form->getPassword();
+
+        $user->setUserName($userName);
+        $user->setPassword($password);
+
+        $user->register();
     }
 }

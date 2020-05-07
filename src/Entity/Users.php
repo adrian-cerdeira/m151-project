@@ -56,6 +56,21 @@ class Users
         return $this;
     }
 
+    public function register()
+    {
+        $connection = $this->connection();
+        $statement = $connection->prepare("INSERT INTO ac_users (userName, password) VALUES (?, ?)");
+
+        // TODO: Add salt
+        $userName = $this->getUserName();
+        $password = $this->getPassword();
+        $statement->bind_param('ss', $userName, $password);
+
+        mysqli_stmt_execute($statement);
+        mysqli_stmt_close($statement);
+        mysqli_close($connection);
+    }
+
     public function connection()
     {
         $environment = new db();
