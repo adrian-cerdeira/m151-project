@@ -85,8 +85,8 @@ class LoginController extends AbstractController
             $session = $request->getSession();
 
             // TODO: Refactor mit get setter von user
-            $session->set("userId", $loggerUserId);
-            $session->set("username", $userName);
+            $session->set('userId', $loggerUserId);
+            $session->set('username', $userName);
         }
     }
 }

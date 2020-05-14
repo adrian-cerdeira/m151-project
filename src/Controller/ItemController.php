@@ -16,6 +16,10 @@ class ItemController extends AbstractController
      */
     public function index(Request $request)
     {
+        if (!$this->isAuthenticated($request)) {
+            return $this->redirect('/login');
+        }
+
         $items = new Items();
         $form = $this->createForm(ItemType::class, $items);
         $items = $items->getAll();
@@ -26,7 +30,7 @@ class ItemController extends AbstractController
             $formData = $form->getData();
             $this->addAction($formData);
 
-            return $this->redirect("/");
+            return $this->redirect('/');
         }
 
         return $this->render(
@@ -43,6 +47,10 @@ class ItemController extends AbstractController
      */
     public function editAction(Request $request, $id)
     {
+        if (!$this->isAuthenticated($request)) {
+            return $this->redirect('/login');
+        }
+
         $item = new Items();
         $item = $item->getById($id);
 
@@ -76,6 +84,10 @@ class ItemController extends AbstractController
      */
     public function removeAction(Request $request, $id)
     {
+        if (!$this->isAuthenticated($request)) {
+            return $this->redirect('/login');
+        }
+
         $item = new Items();
         $item->delete($id);
 
@@ -104,5 +116,16 @@ class ItemController extends AbstractController
         $item->setAmount($amount);
 
         $item->update($id);
+    }
+
+    private function isAuthenticated($request)
+    {
+        $session = $request->getSession();
+
+        if ($session->has('userId')) {
+            return true;
+        }
+
+        return false;
     }
 }
