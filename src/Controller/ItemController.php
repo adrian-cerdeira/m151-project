@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Items;
+use App\Entity\Users;
 use App\Form\EditItemType;
 use App\Form\ItemType;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,6 +22,9 @@ class ItemController extends AbstractController
         }
 
         $items = new Items();
+        $user = new Users();
+        $userId = $request->getSession()->get('userId');
+        $user = $user->getById($userId);
         $form = $this->createForm(ItemType::class, $items);
         $items = $items->getAll();
         $form->handleRequest($request);
@@ -37,7 +41,8 @@ class ItemController extends AbstractController
             'items/index.html.twig',
             [
                 'items' => $items,
-                'form' => $form->createView()
+                'form' => $form->createView(),
+                'userName' => $user->getUserName(),
             ]
         );
     }

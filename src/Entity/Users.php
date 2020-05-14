@@ -56,6 +56,27 @@ class Users
         return $this;
     }
 
+    public function getById(int $id)
+    {
+        $user = new Users();
+        $connection = $this->connection();
+        $statement = $connection->prepare("SELECT * FROM ac_users WHERE id = ?");
+        $statement->bind_param("i", $id);
+
+        mysqli_stmt_execute($statement);
+
+        $statement->bind_result($id, $userName, $password);
+        $statement->fetch();
+
+        $user->setUserName($userName);
+        $user->setPassword($password);
+
+        mysqli_stmt_close($statement);
+        mysqli_close($connection);
+
+        return $user;
+    }
+
     public function register()
     {
         $salt = 'q%qAe"jyeE=vN{^';
