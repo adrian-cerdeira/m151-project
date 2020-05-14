@@ -80,7 +80,7 @@ class Comments
         $dbuser = $environment->getUser();
         $dbpass = $environment->getPass();
         $db = $environment->getDb();
-        $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $db) or die("Connect failed: %s\n" . $conn->error);
+        $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $db) or die('Connect failed: %s\n' . $conn->error);
 
         return $conn;
     }

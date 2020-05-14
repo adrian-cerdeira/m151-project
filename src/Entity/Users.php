@@ -60,7 +60,7 @@ class Users
     {
         $user = new Users();
         $connection = $this->connection();
-        $statement = $connection->prepare("SELECT * FROM ac_users WHERE id = ?");
+        $statement = $connection->prepare('SELECT * FROM ac_users WHERE id = ?');
         $statement->bind_param('i', $id);
 
         mysqli_stmt_execute($statement);
@@ -81,7 +81,7 @@ class Users
     {
         $salt = 'q%qAe"jyeE=vN{^';
         $connection = $this->connection();
-        $statement = $connection->prepare("INSERT INTO ac_users (userName, password) VALUES (?, ?)");
+        $statement = $connection->prepare('INSERT INTO ac_users (userName, password) VALUES (?, ?)');
 
         $userName = $this->getUserName();
         $password = md5($salt . $this->getPassword());
@@ -95,7 +95,7 @@ class Users
     public function login()
     {
         $connection = $this->connection();
-        $statement = $connection->prepare("SELECT id FROM ac_users WHERE userName = ? AND password = ?");
+        $statement = $connection->prepare('SELECT id FROM ac_users WHERE userName = ? AND password = ?');
 
         $userName = $this->getUserName();
         $password = $this->getPassword();
@@ -113,7 +113,7 @@ class Users
         $dbuser = $environment->getUser();
         $dbpass = $environment->getPass();
         $db = $environment->getDb();
-        $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $db) or die("Connect failed: %s\n" . $conn->error);
+        $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $db) or die('Connect failed: %s\n' . $conn->error);
 
         return $conn;
     }
