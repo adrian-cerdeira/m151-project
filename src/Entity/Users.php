@@ -71,6 +71,20 @@ class Users
         mysqli_close($connection);
     }
 
+    public function login()
+    {
+        $connection = $this->connection();
+        $statement = $connection->prepare("SELECT id FROM ac_users WHERE userName = ? AND password = ?");
+
+        $userName = $this->getUserName();
+        $password = $this->getPassword();
+        $statement->bind_param('ss', $userName, $password);
+
+        mysqli_stmt_execute($statement);
+
+        return $statement->get_result()->fetch_assoc();
+    }
+
     public function connection()
     {
         $environment = new db();

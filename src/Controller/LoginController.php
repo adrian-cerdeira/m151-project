@@ -45,7 +45,10 @@ class LoginController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Anmelden eines Users
+            $formData = $form->getData();
+            $this->loginUser($formData, $user, $request);
+
+            return $this->redirect('/');
         }
 
         return $this->render(
@@ -65,5 +68,25 @@ class LoginController extends AbstractController
         $user->setPassword($password);
 
         $user->register();
+    }
+
+    private function loginUser($form, $user, $request)
+    {
+        $userName = $form->getUserName();
+        $password = $form->getPassword();
+
+        $user->setUserName($userName);
+        $user->setPassword($password);
+
+        $loggedUser = $user->login();
+        $loggerUserId = $loggedUser['id'];
+
+        if ($loggedUser && $loggerUserId) {
+            $session = $request->getSession();
+
+            // TODO: Refactor mit get setter von user
+            $session->set("userId", $loggerUserId);
+            $session->set("username", $userName);
+        }
     }
 }
