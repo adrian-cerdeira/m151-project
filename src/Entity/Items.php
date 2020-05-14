@@ -66,7 +66,7 @@ class Items
         $item = new Items();
         $connection = $this->connection();
         $statement = $connection->prepare("SELECT * FROM ac_items WHERE id = ?");
-        $statement->bind_param("i", $id);
+        $statement->bind_param('i', $id);
 
         mysqli_stmt_execute($statement);
 

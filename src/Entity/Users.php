@@ -61,7 +61,7 @@ class Users
         $user = new Users();
         $connection = $this->connection();
         $statement = $connection->prepare("SELECT * FROM ac_users WHERE id = ?");
-        $statement->bind_param("i", $id);
+        $statement->bind_param('i', $id);
 
         mysqli_stmt_execute($statement);
 

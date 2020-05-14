@@ -3,16 +3,11 @@
 {% endblock %}
 {% block body %}
 	<section class="section container has-text-centered">
-		<h1 class="title has-text-centered">{{ item.name }}
-			Details</h1>
-		<br/>
-
+		<h1 class="title has-text-centered">
+			{{ item.name }} Details
+		</h1>
 		<h2 class="subtitle">
-			Name:
-			{{ item.name }}
-			<br/>
-			Anzahl:
-			{{ item.amount }}
+			Anzahl: {{ item.amount }}
 		</h2>
 
 		<div class="columns">
@@ -33,6 +28,26 @@
 					Löschen
 				</a>
 			</div>
+		</div>
+
+		<h3 class="subtitle">Kommentare</h3>
+		<div class="form">
+			{{ form_start(form) }}
+			<div class="field">
+				<div class="control">
+					<div class="label">
+						{{ form_label(form.comment, "Neuer Kommentar") }}
+					</div>
+					{{ form_widget(form.comment) }}
+				</div>
+			</div>
+
+			<div class="field is-grouped">
+				<div class="control">
+					{{ form_row(form.submit, { 'label': 'Senden'}) }}
+				</div>
+			</div>
+			{{ form_end(form) }}
 		</div>
 	</section>
 {% endblock %}

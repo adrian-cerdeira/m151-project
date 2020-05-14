@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Comments;
 use App\Entity\Items;
 use App\Entity\Users;
+use App\Form\CommentType;
 use App\Form\EditItemType;
 use App\Form\ItemType;
 use Symfony\Component\Routing\Annotation\Route;
@@ -59,10 +61,19 @@ class ItemController extends AbstractController
         $item = new Items();
         $item = $item->getById($id);
 
+        $comment = new Comments();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Kommentar erstellen
+        }
+
         return $this->render(
             'items/item.html.twig',
             [
-                'item' => $item
+                'item' => $item,
+                'form' => $form->createView()
             ]
         );
     }
