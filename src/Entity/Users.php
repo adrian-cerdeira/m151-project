@@ -58,12 +58,12 @@ class Users
 
     public function register()
     {
+        $salt = 'q%qAe"jyeE=vN{^';
         $connection = $this->connection();
         $statement = $connection->prepare("INSERT INTO ac_users (userName, password) VALUES (?, ?)");
 
-        // TODO: Add salt
         $userName = $this->getUserName();
-        $password = $this->getPassword();
+        $password = md5($salt . $this->getPassword());
         $statement->bind_param('ss', $userName, $password);
 
         mysqli_stmt_execute($statement);
