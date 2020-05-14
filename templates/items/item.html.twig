@@ -14,5 +14,20 @@
 			Anzahl:
 			{{ item.amount }}
 		</h2>
-	</div>
-</section>{% endblock %}
+
+		<div class="columns">
+			<div class="column">
+				<a href="/edit/{{item.id}}" class="button is-primary">
+					<i class="fas fa-edit"></i>
+					Editieren
+				</a>
+			</div>
+			<div class="column">
+				<a href="/remove/{{item.id}}" class="button is-danger">
+					<i class="fas fa-trash"></i>
+					Löschen
+				</a>
+			</div>
+		</div>
+	</section>
+{% endblock %}
