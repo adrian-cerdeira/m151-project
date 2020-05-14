@@ -3,7 +3,8 @@
 {% endblock %}
 {% block body %}
 	<section class="section container">
-		<h1 class="title has-text-centered">Einkaufliste {{userName}}</h1>
+		<h1 class="title has-text-centered">Einkaufliste
+			{{userName}}</h1>
 
 		<table class="table is-fullwidth">
 			<thead>
@@ -36,6 +37,11 @@
 						</td>
 						<td>
 							<div class="columns">
+								<div class="column">
+									<a href="/detail/{{item.id}}" class="button is-secondary">
+										Details sehen
+									</a>
+								</div>
 								<div class="column">
 									<a href="/edit/{{item.id}}" class="button is-primary">
 										<i class="fas fa-edit"></i>

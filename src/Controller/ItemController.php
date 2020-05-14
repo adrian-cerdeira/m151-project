@@ -48,6 +48,26 @@ class ItemController extends AbstractController
     }
 
     /**
+     * @Route("/detail/{id}")
+     */
+    public function detailAction(Request $request, $id)
+    {
+        if (!$this->isAuthenticated($request)) {
+            return $this->redirect('/login');
+        }
+
+        $item = new Items();
+        $item = $item->getById($id);
+
+        return $this->render(
+            'items/item.html.twig',
+            [
+                'item' => $item
+            ]
+        );
+    }
+
+    /**
      * @Route("/edit/{id}")
      */
     public function editAction(Request $request, $id)
