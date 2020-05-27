@@ -73,7 +73,7 @@ class ItemController extends AbstractController
             $userId = $request->getSession()->get('userId');
             $this->addComment($formData, $id, $userId);
 
-            return $this->redirect('/');
+            return $this->redirect('/detail/' . $id);
         }
 
         return $this->render(
