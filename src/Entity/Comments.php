@@ -100,6 +100,7 @@ class Comments
 
     public function connection()
     {
+        // TODO: New Class connection
         $environment = new db();
         $dbhost = $environment->getHost();
         $dbuser = $environment->getUser();
