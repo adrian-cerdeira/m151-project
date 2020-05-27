@@ -4,10 +4,12 @@
 {% block body %}
 	<section class="section container has-text-centered">
 		<h1 class="title has-text-centered">
-			{{ item.name }} Details
+			{{ item.name }}
+			Details
 		</h1>
 		<h2 class="subtitle">
-			Anzahl: {{ item.amount }}
+			Anzahl:
+			{{ item.amount }}
 		</h2>
 
 		<div class="columns">
@@ -30,7 +32,21 @@
 			</div>
 		</div>
 
-		<h3 class="subtitle">Kommentare</h3>
+		<h3 class="title">Kommentare</h3>
+		{% for c in comments %}
+			<div class="box">
+				<article class="media">
+					<div class="media-content">
+						<div class="content">
+							<p>
+								{{c.comment}}
+							</p>
+						</div>
+					</div>
+				</article>
+			</div>
+		{% endfor %}
+
 		<div class="form">
 			{{ form_start(form) }}
 			<div class="field">

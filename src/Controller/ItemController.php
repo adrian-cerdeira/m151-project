@@ -62,6 +62,9 @@ class ItemController extends AbstractController
         $item = $item->getById($id);
 
         $comment = new Comments();
+        $comments = new Comments();
+        $comments = $comments->getCommentsByItemId($id);
+
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
@@ -77,6 +80,7 @@ class ItemController extends AbstractController
             'items/item.html.twig',
             [
                 'item' => $item,
+                'comments' => $comments,
                 'form' => $form->createView()
             ]
         );

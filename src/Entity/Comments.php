@@ -73,6 +73,17 @@ class Comments
         return $this;
     }
 
+    public function getCommentsByItemId(int $itemId)
+    {
+        $connection = $this->connection();
+        $statement = $connection->prepare('SELECT id, comment, itemId, userId FROM ac_comments WHERE itemId = ?');
+        $statement->bind_param('i', $itemId);
+
+        mysqli_stmt_execute($statement);
+
+        return $statement->get_result();
+    }
+
     public function create(): void
     {
         $connection = $this->connection();
