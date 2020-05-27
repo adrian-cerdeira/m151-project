@@ -73,6 +73,20 @@ class Comments
         return $this;
     }
 
+    public function create(): void
+    {
+        $connection = $this->connection();
+        $statement = $connection->prepare('INSERT INTO ac_comments (comment, itemId, userId) VALUES (?, ?, ?)');
+        $comment = $this->getComment();
+        $itemId = $this->getItemId();
+        $userId = $this->getUserId();
+        $statement->bind_param('sii', $comment, $itemId, $userId);
+
+        mysqli_stmt_execute($statement);
+        mysqli_stmt_close($statement);
+        mysqli_close($connection);
+    }
+
     public function connection()
     {
         $environment = new db();

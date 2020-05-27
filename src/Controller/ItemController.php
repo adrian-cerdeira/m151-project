@@ -66,7 +66,11 @@ class ItemController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Kommentar erstellen
+            $formData = $form->getData();
+            $userId = $request->getSession()->get('userId');
+            $this->addComment($formData, $id, $userId);
+
+            return $this->redirect('/');
         }
 
         return $this->render(
@@ -140,6 +144,18 @@ class ItemController extends AbstractController
         $item->setAmount($amount);
 
         $item->create();
+    }
+
+    private function addComment($form, $itemId, $userId)
+    {
+        $comment = new Comments();
+        $commentText = $form->getComment();
+
+        $comment->setComment($commentText);
+        $comment->setItemId($itemId);
+        $comment->setUserId($userId);
+
+        $comment->create();
     }
 
     private function save($form, $id)
