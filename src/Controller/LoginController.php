@@ -79,11 +79,11 @@ class LoginController extends AbstractController
         $user->setPassword($password);
 
         $loggedUser = $user->login();
-        $loggerUserId = $loggedUser['id'];
+        $loggedUserId = $loggedUser['id'];
 
-        if ($loggedUser && $loggerUserId) {
+        if ($loggedUser && $loggedUserId) {
             $session = $request->getSession();
-            $session->set('userId', $loggerUserId);
+            $session->set('userId', $loggedUserId);
         }
     }
 }

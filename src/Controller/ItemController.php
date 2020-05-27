@@ -31,7 +31,6 @@ class ItemController extends AbstractController
         $items = $items->getAll();
         $form->handleRequest($request);
 
-        // Erstellung eines Items handlen
         if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
             $this->addAction($formData);
@@ -60,11 +59,9 @@ class ItemController extends AbstractController
 
         $item = new Items();
         $item = $item->getById($id);
-
         $comment = new Comments();
         $comments = new Comments();
         $comments = $comments->getCommentsByItemId($id);
-
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
@@ -97,11 +94,9 @@ class ItemController extends AbstractController
 
         $item = new Items();
         $item = $item->getById($id);
-
         $form = $this->createForm(EditItemType::class);
         $form->get('name')->setData($item->getName());
         $form->get('amount')->setData($item->getAmount());
-
         $form->handleRequest($request);
         $isSubmitted = $form->isSubmitted() && $form->get('submit')->isClicked() && $form->isValid();
         $isCanceled = $form->isSubmitted() && $form->get('cancel')->isClicked();
